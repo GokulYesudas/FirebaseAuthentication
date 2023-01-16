@@ -1,15 +1,16 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:state_management_demo/screens/login_screen.dart';
 import 'package:state_management_demo/screens/op.dart';
-import 'package:state_management_demo/screens/registration.dart';
+import 'package:state_management_demo/screens/studentform.dart';
 
-
-class LoginScreen extends StatelessWidget {
+class RegisterScreen extends StatelessWidget {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
-  @override
+  RegisterScreen({Key? key}) : super(key: key);
+
   void dispose() {
     emailController.dispose();
     passwordController.dispose();
@@ -23,13 +24,13 @@ class LoginScreen extends StatelessWidget {
       backgroundColor: Colors.white,
       body: SafeArea(
         child: SingleChildScrollView(
-          child: Padding(padding: EdgeInsets.symmetric(),
+          child: Padding(padding: const EdgeInsets.symmetric(),
             child: Column(
               children: [
                 Container(alignment: Alignment.center,
-                  child: Image.asset('assets/images/DexterLogo.jpg'),
-                  height: 230, width: 180,),
-                const Text('Username', textAlign: TextAlign.center,
+                  height: 230, width: 180,
+                  child: Image.asset('assets/images/DexterLogo.jpg'),),
+                const Text('Username ', textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
@@ -43,11 +44,11 @@ class LoginScreen extends StatelessWidget {
                     width: 350,
                     child: TextField(
                       controller: emailController,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         filled: true,
                         fillColor: Colors.white,
                         border: OutlineInputBorder(),
-                        hintText: "Enter your Username",
+                        hintText: "Enter a username",
                       ),
                     ),
                   ),
@@ -70,8 +71,33 @@ class LoginScreen extends StatelessWidget {
                     child: TextField(
                       controller: passwordController,
                       obscureText: true,
+                      decoration: const InputDecoration(
+                        filled: true,
+                        fillColor: Colors.white,
+                        border: OutlineInputBorder(),
+                        hintText: "Enter a password",
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 30,
+                ),
+                const Text('Confirm password', textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                const Center(
+                  child: SizedBox(
+                    width: 350,
+                    child: TextField(
+                      obscureText: true,
                       decoration: InputDecoration(
-
                         filled: true,
                         fillColor: Colors.white,
                         border: OutlineInputBorder(),
@@ -86,13 +112,13 @@ class LoginScreen extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text("Dont have an account? "),
+                    const Text("Already have an account? "),
                     InkWell(
                         onTap: () {
-                          Get.to(RegisterScreen());
+                          Get.to(LoginScreen());
                         },
                         child: const Text(
-                          "Register", style: TextStyle(color: Colors.blue),)),
+                          "Login", style: TextStyle(color: Colors.blue),)),
                   ],
                 ),
                 const SizedBox(
@@ -101,30 +127,25 @@ class LoginScreen extends StatelessWidget {
                 OutlinedButton(
                   style:
                   OutlinedButton.styleFrom(backgroundColor: Colors.white),
-                  child: Text(
-                    'SignIn',
+                  onPressed: signUp,
+                  child: const Text(
+                    'Register',
                     style: TextStyle(fontSize: 20.0,
                       color: Colors.black,),
                   ),
-                  onPressed: signIn,
                 ),
-                SizedBox(
-                  height: 20,
-                ),
-
               ],
             ),
           ),
         ),
       ),
-
     );
   }
-    Future signIn() async{
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: emailController.text.trim(),
-        password: passwordController.text.trim(),
-      );
-      Get.to(Output());
-    }
+  Future signUp() async{
+    await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      email: emailController.text.trim(),
+      password: passwordController.text.trim(),
+    );
+    Get.to(StudentRegForm());
+  }
 }

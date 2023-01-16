@@ -19,7 +19,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
+      debugShowCheckedModeBanner: false,
      home: homepage(),
     );
   }
@@ -30,7 +31,9 @@ class homepage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(body: StreamBuilder<User?> (
+
+    return  Scaffold(
+      body: StreamBuilder<User?> (
     stream: FirebaseAuth.instance.authStateChanges(),
     builder: (context, snapshot){
       if (snapshot.hasData){
