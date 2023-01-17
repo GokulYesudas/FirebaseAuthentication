@@ -1,13 +1,18 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:state_management_demo/Components/SignInButton.dart';
 import 'package:state_management_demo/screens/op.dart';
 import 'package:state_management_demo/screens/registration.dart';
+import '../Components/text_fields.dart';
 
 
 class LoginScreen extends StatelessWidget {
+
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+
+  LoginScreen({Key? key}) : super(key: key);
 
   @override
   void dispose() {
@@ -20,97 +25,72 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.grey[300],
       body: SafeArea(
         child: SingleChildScrollView(
-          child: Padding(padding: EdgeInsets.symmetric(),
+          child: Padding(padding: const EdgeInsets.symmetric(),
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Container(alignment: Alignment.center,
-                  child: Image.asset('assets/images/DexterLogo.jpg'),
-                  height: 230, width: 180,),
-                const Text('Username', textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Center(
-                  child: SizedBox(
-                    width: 350,
-                    child: TextField(
-                      controller: emailController,
-                      decoration: InputDecoration(
-                        filled: true,
-                        fillColor: Colors.white,
-                        border: OutlineInputBorder(),
-                        hintText: "Enter your Username",
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 30,
-                ),
-                const Text('Password', textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Center(
-                  child: SizedBox(
-                    width: 350,
-                    child: TextField(
-                      controller: passwordController,
-                      obscureText: true,
-                      decoration: InputDecoration(
 
-                        filled: true,
-                        fillColor: Colors.white,
-                        border: OutlineInputBorder(),
-                        hintText: "Enter your password",
-                      ),
-                    ),
+                // Dexter Hut Logo
+                  Container(alignment: Alignment.center,
+                  height: 230, width: 180,
+                  child: Image.asset('assets/images/DexterLogo.png'),),
+                  const SizedBox(height: 10),
+
+
+                // You Have been missed
+                Text("Welcome back you have been missed !",
+                  style:
+                  TextStyle(
+                  fontSize: 18,
+                  color: Colors.grey.shade800,
                   ),
                 ),
-                const SizedBox(
-                  height: 20,
+                const SizedBox(height: 20,),
+
+                // Email
+                TextFields(
+                  controller: emailController,
+                  hintText: "Username",
+                  obscureText: false,
                 ),
+                const SizedBox(height: 10,),
+
+
+                // Password TextField
+                TextFields(
+                  controller: passwordController,
+                  hintText: "Password",
+                  obscureText: true,
+                ),
+                const SizedBox(height: 20,),
+
+
+              // Dont have an account
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text("Dont have an account? "),
+                    Text("Don't have an account? ",
+                      style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.grey.shade800
+                      ),
+                    ),
                     InkWell(
                         onTap: () {
                           Get.to(RegisterScreen());
                         },
                         child: const Text(
-                          "Register", style: TextStyle(color: Colors.blue),)),
+                          "Register", style: TextStyle(fontSize:16,color: Colors.blue,fontWeight: FontWeight.bold),)),
                   ],
                 ),
-                const SizedBox(
-                  height: 10,
-                ),
-                OutlinedButton(
-                  style:
-                  OutlinedButton.styleFrom(backgroundColor: Colors.white),
-                  child: Text(
-                    'SignIn',
-                    style: TextStyle(fontSize: 20.0,
-                      color: Colors.black,),
-                  ),
-                  onPressed: signIn,
-                ),
-                SizedBox(
-                  height: 20,
-                ),
+                const SizedBox(height: 10,),
+
+
+                // LoginIn button
+                SignInButton(onTap: signIn),
 
               ],
             ),
@@ -125,6 +105,6 @@ class LoginScreen extends StatelessWidget {
         email: emailController.text.trim(),
         password: passwordController.text.trim(),
       );
-      Get.to(Output());
+      Get.to(const Output());
     }
 }

@@ -2,8 +2,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:state_management_demo/screens/login_screen.dart';
-import 'package:state_management_demo/screens/op.dart';
 import 'package:state_management_demo/screens/studentform.dart';
+
+import '../Components/SignUpButton.dart';
+import '../Components/text_fields.dart';
 
 class RegisterScreen extends StatelessWidget {
   final emailController = TextEditingController();
@@ -21,119 +23,84 @@ class RegisterScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.grey[300],
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(padding: const EdgeInsets.symmetric(),
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
+
+                // Dexter Hut Logo
                 Container(alignment: Alignment.center,
                   height: 230, width: 180,
-                  child: Image.asset('assets/images/DexterLogo.jpg'),),
-                const Text('Username ', textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
+                  child: Image.asset('assets/images/DexterLogo.png'),),
+                const SizedBox(height: 10),
+
+                  //Tell us more about yourself
+                Text("Tell us more about yourself ",
+                  style:
+                  TextStyle(
+                    fontSize: 18,
+                    color: Colors.grey.shade800,
                   ),
                 ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Center(
-                  child: SizedBox(
-                    width: 350,
-                    child: TextField(
-                      controller: emailController,
-                      decoration: const InputDecoration(
-                        filled: true,
-                        fillColor: Colors.white,
-                        border: OutlineInputBorder(),
-                        hintText: "Enter a username",
-                      ),
-                    ),
+                const SizedBox(height: 20,),
+
+                  //Email
+                  TextFields(
+                    obscureText: false,
+                    hintText: "Username",
+                    controller: emailController,
                   ),
+                const SizedBox(height: 10,),
+
+
+                  //Password
+                  TextFields(
+                    obscureText: true,
+                    hintText: "Password",
+                    controller: passwordController,
                 ),
-                const SizedBox(
-                  height: 30,
+                const SizedBox(height: 10),
+
+                //Confirm Password
+                const TextFields(
+                  obscureText: true,
+                  hintText: "Confirm password",
+                  controller: null,
                 ),
-                const Text('Password', textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Center(
-                  child: SizedBox(
-                    width: 350,
-                    child: TextField(
-                      controller: passwordController,
-                      obscureText: true,
-                      decoration: const InputDecoration(
-                        filled: true,
-                        fillColor: Colors.white,
-                        border: OutlineInputBorder(),
-                        hintText: "Enter a password",
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 30,
-                ),
-                const Text('Confirm password', textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                const Center(
-                  child: SizedBox(
-                    width: 350,
-                    child: TextField(
-                      obscureText: true,
-                      decoration: InputDecoration(
-                        filled: true,
-                        fillColor: Colors.white,
-                        border: OutlineInputBorder(),
-                        hintText: "Enter your password",
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
+                const SizedBox(height: 20),
+
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text("Already have an account? "),
+                     Text("Already have an account? ",
+                       style: TextStyle(
+                           fontSize: 16,
+                           color: Colors.grey.shade800
+                       ),
+                     ),
                     InkWell(
                         onTap: () {
                           Get.to(LoginScreen());
                         },
                         child: const Text(
-                          "Login", style: TextStyle(color: Colors.blue),)),
+                          "Login",
+                          style: TextStyle(
+                              color: Colors.blue,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold
+                          ),
+                        ),
+                    ),
                   ],
                 ),
-                const SizedBox(
-                  height: 10,
-                ),
-                OutlinedButton(
-                  style:
-                  OutlinedButton.styleFrom(backgroundColor: Colors.white),
-                  onPressed: signUp,
-                  child: const Text(
-                    'Register',
-                    style: TextStyle(fontSize: 20.0,
-                      color: Colors.black,),
-                  ),
-                ),
+                const SizedBox(height: 10,),
+
+
+                //Register button
+                SignUpButton(onTap: signUp),
               ],
             ),
           ),

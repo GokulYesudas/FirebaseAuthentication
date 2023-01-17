@@ -5,13 +5,10 @@ import 'package:state_management_demo/screens/login_screen.dart';
 import 'package:get/get.dart';
 import 'package:state_management_demo/screens/op.dart';
 
-
-
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -19,15 +16,15 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
+    return const GetMaterialApp(
       debugShowCheckedModeBanner: false,
-     home: homepage(),
+     home: HomePage(),
     );
   }
 }
 
-class homepage extends StatelessWidget {
-  const homepage({Key? key}) : super(key: key);
+class HomePage extends StatelessWidget {
+  const HomePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
